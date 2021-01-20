@@ -1,41 +1,47 @@
 import React from 'react';
 
-function styleInject(css, ref) {
-  if ( ref === void 0 ) ref = {};
-  var insertAt = ref.insertAt;
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
 
-  if (!css || typeof document === 'undefined') { return; }
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
 
-  var head = document.head || document.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-  style.type = 'text/css';
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
 
-  if (insertAt === 'top') {
-    if (head.firstChild) {
-      head.insertBefore(style, head.firstChild);
-    } else {
-      head.appendChild(style);
-    }
-  } else {
-    head.appendChild(style);
-  }
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
 }
 
-var css_248z = ".test-component {\n  background-color: white;\n  border: 1px solid black;\n  padding: 16px;\n  width: 360px;\n  text-align: center; }\n  .test-component .heading {\n    font-size: 64px; }\n  .test-component.test-component-secondary {\n    background-color: black;\n    color: white; }\n";
-styleInject(css_248z);
+function TodoItem(_a) {
+    var item = _a.item, onClick = _a.onClick;
+    return (React.createElement("div", { onClick: function () { return onClick(item.Id); } },
+        React.createElement("h1", { style: { textDecoration: item.isSelected ? "line-through" : "None" } }, item.name)));
+}
 
-var TestComponent = function (_a) {
-    var theme = _a.theme;
-    return (React.createElement("div", { "data-testid": "test-component", className: "test-component test-component-" + theme },
-        React.createElement("h1", { className: "heading" }, "I'm the test component"),
-        React.createElement("h2", null, "Made with love by Ravikanth")));
-};
+function Todo(_a) {
+    var list = _a.list, onChange = _a.onChange, currentUser = _a.currentUser;
+    var updatelist = function (id) {
+        var newlist = __spreadArrays(list);
+        var index = newlist.findIndex(function (item) { return item.Id == id; });
+        if (index > -1) {
+            newlist[index].isSelected = !newlist[index].isSelected;
+            newlist[index].updateBy = currentUser;
+            onChange(newlist);
+        }
+    };
+    return (React.createElement("div", null, list.map(function (item) { return (React.createElement(TodoItem, { onClick: updatelist, item: item })); })));
+}
 
-export { TestComponent };
+export { Todo };
 //# sourceMappingURL=index.es.js.map
