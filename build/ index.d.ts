@@ -1,2 +1,2 @@
-import TestComponent from "./Component/TestComponent";
-export { TestComponent };
+import Todo from "./Component/Todo";
+export { Todo };
